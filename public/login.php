@@ -21,25 +21,78 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 <!doctype html>
-<html>
+<html lang="pt-br">
 
 <head>
   <meta charset="utf-8">
-  <title>Entrar - Plataforma</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TigrIFBA - Entrar</title>
+
+  <!-- Bootstrap core & SB Admin 2 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/startbootstrap-sb-admin-2@4.1.4/css/sb-admin-2.min.css" rel="stylesheet">
+
+  <!-- Custom styles -->
   <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 
-<body>
-  <div class="card">
-    <h1>Entrar</h1>
-    <?php if ($errors): ?><div class="errors"><?= htmlspecialchars($errors[0]) ?></div><?php endif; ?>
-    <form method="post">
-      <label>Email<input type="email" name="email" required></label>
-      <label>Senha<input type="password" name="password" required></label>
-      <button type="submit">Entrar</button>
-    </form>
-    <p>Sem conta? <a href="/register.php">Registrar</a></p>
+<body class="bg-gradient-primary">
+
+  <div class="container">
+
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+
+      <div class="col-xl-5 col-lg-6 col-md-8">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+          <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="p-5">
+              <div class="text-center mb-4">
+                <h1 class="h4 text-gray-900 mb-2">Bem-vindo ao TigrIFBA</h1>
+                <p class="mb-4">Faça login para continuar</p>
+              </div>
+
+              <?php if ($errors): ?>
+                <div class="alert alert-danger text-center" role="alert">
+                  <?= htmlspecialchars($errors[0]) ?>
+                </div>
+              <?php endif; ?>
+
+              <form method="post" class="user">
+                <div class="form-group mb-3">
+                  <input type="email" class="form-control form-control-user" name="email" placeholder="E-mail" required
+                    autofocus>
+                </div>
+                <div class="form-group mb-3">
+                  <input type="password" class="form-control form-control-user" name="password" placeholder="Senha"
+                    required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-user btn-block">
+                  <i class="fas fa-sign-in-alt"></i> Entrar
+                </button>
+              </form>
+
+              <hr>
+              <div class="text-center">
+                <a class="small" href="/register.php">Não tem conta? Registre-se</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
   </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/startbootstrap-sb-admin-2@4.1.4/js/sb-admin-2.min.js"></script>
+
 </body>
 
 </html>
