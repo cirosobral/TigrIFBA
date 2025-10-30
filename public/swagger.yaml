@@ -24,9 +24,6 @@ components:
     BalanceResponse:
       type: object
       properties:
-        user_id:
-          type: integer
-          example: 42
         balance:
           type: number
           format: double
@@ -60,13 +57,32 @@ components:
         success:
           type: boolean
           example: true
-        balance:
-          type: number
-          format: double
-          example: 140.00
         message:
           type: string
           example: "Saldo atualizado com sucesso."
+
+    ApiStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "ok"
+          description: "Indica se a API está operacional."
+        version:
+          type: string
+          example: "0.0.2"
+          description: "Versão atual da API."
+        timestamp:
+          type: string
+          format: date-time
+          example: "2025-10-29T21:20:00Z"
+          description: "Momento da resposta, em UTC."
+        checks:
+          type: object
+          example:
+            database: ok
+            logged_in: false
+          description: "Verificações realizadas pelo sistema."
 
     Error:
       type: object
@@ -79,6 +95,22 @@ components:
           example: "Saldo insuficiente."
 
 paths:
+  /status:
+    get:
+      summary: Verificar status da API
+      description: >
+        Retorna informações básicas sobre a disponibilidade da API e a versão atual.
+        Não requer autenticação. Útil para monitoramento e testes de conectividade.
+      tags: [System]
+      security: [] # público
+      responses:
+        "200":
+          description: API operacional
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiStatus"
+
   /balance:
     get:
       summary: Consultar saldo do usuário autenticado
@@ -178,3 +210,5 @@ paths:
 tags:
   - name: User
     description: Endpoints usados por usuários autenticados (sessão cookie)
+  - name: System
+    description: Endpoints públicos de sistema e monitoramento
