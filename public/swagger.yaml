@@ -1,0 +1,180 @@
+openapi: 3.0.3
+info:
+  title: TigrIFBA - API
+  description: >
+    API para plataforma de jogos (educativos).
+  version: "1.0.1"
+
+servers:
+  - url: http://localhost:7000
+    description: URL base
+
+security:
+  - cookieAuth: [] # padrão para rotas web; rotas de jogo especificam outros requirements
+
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: PHPSESSID
+      description: "Sessão web (cookie) obtida via /login."
+
+  schemas:
+    BalanceResponse:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          example: 42
+        balance:
+          type: number
+          format: double
+          example: 150.00
+        last_updated:
+          type: string
+          format: date-time
+          example: 2025-10-29T21:10:00Z
+
+    TransactionRequest:
+      type: object
+      required: [amount]
+      properties:
+        amount:
+          type: number
+          format: double
+          example: 10.00
+          description: Valor a ser debitado ou creditado.
+        game_id:
+          type: string
+          example: "slot_machine_01"
+          description: Identificador opcional do jogo que originou a transação.
+        description:
+          type: string
+          example: "Aposta em caça-níquel"
+          description: Descrição opcional da transação.
+
+    TransactionResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        balance:
+          type: number
+          format: double
+          example: 140.00
+        message:
+          type: string
+          example: "Saldo atualizado com sucesso."
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 400
+        message:
+          type: string
+          example: "Saldo insuficiente."
+
+paths:
+  /balance:
+    get:
+      summary: Consultar saldo do usuário autenticado
+      tags: [User]
+      security:
+        - cookieAuth: []
+      responses:
+        "200":
+          description: Saldo do usuário
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BalanceResponse"
+        "401":
+          description: Não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /debit:
+    post:
+      summary: Debitar valor do saldo do usuário autenticado (aposta)
+      description: >
+        Diminui o saldo do usuário de forma atômica. 
+        Retorna erro caso o saldo seja insuficiente.
+      tags: [User]
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransactionRequest"
+      responses:
+        "200":
+          description: Valor debitado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionResponse"
+        "400":
+          description: Valor inválido
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Saldo insuficiente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /credit:
+    post:
+      summary: Creditar valor no saldo do usuário autenticado (pagamento de prêmio)
+      description: >
+        Aumenta o saldo do usuário de forma atômica. 
+        Pode ser chamado pelos jogos via backend quando há ganho.
+      tags: [User]
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransactionRequest"
+      responses:
+        "200":
+          description: Valor creditado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionResponse"
+        "400":
+          description: Valor inválido
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+tags:
+  - name: User
+    description: Endpoints usados por usuários autenticados (sessão cookie)

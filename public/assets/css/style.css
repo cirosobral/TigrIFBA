@@ -1,0 +1,85 @@
+/* public/assets/css/style.css - estilo simples */
+* {
+  box-sizing: border-box;
+  font-family: Inter, Arial, Helvetica, sans-serif
+}
+
+body {
+  margin: 0;
+  background: #f4f6f8;
+  color: #111
+}
+
+.container {
+  max-width: 960px;
+  margin: 20px auto;
+  padding: 0 16px
+}
+
+header {
+  background: #ffffff;
+  border-bottom: 1px solid #e2e6ea;
+  padding: 12px 0
+}
+
+header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between
+}
+
+.card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(16, 24, 40, 0.06);
+  margin-bottom: 16px
+}
+
+label {
+  display: block;
+  margin-bottom: 8px
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px
+}
+
+button {
+  background: #2b6cb0;
+  color: #fff;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer
+}
+
+.errors {
+  background: #ffe6e6;
+  color: #8b1d1d;
+  padding: 8px;
+  border-radius: 6px;
+  margin-bottom: 10px
+}
+
+.big {
+  font-size: 28px;
+  font-weight: 700
+}
+
+.iframe-wrap {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  overflow: hidden
+}
+
+nav a {
+  margin-left: 12px;
+  color: #2b6cb0;
+  text-decoration: none
+}
