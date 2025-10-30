@@ -1,8 +1,8 @@
 # 🐅 TigrIFBA
 
-**TigrIFBA** é uma plataforma educacional modular desenvolvida no IFBA com o objetivo de integrar diferentes sistemas e jogos voltados ao ensino de programação, lógica e tecnologias da informação.
+**TigrIFBA** é uma plataforma unificada para jogos ~~de azar~~ com resultados aleatórios com fins educativos, voltada ao ensino de análise e desenvolvimento de sistemas.
 
-O projeto possui uma **área pública**, composta de um **dashboard** e uma **interface administrativa**, e uma **API** que permite verificar o saldo e registrar operações de crédito e débito no saldo do usuário, permitindo assim que diferentes equipes desenvolvam jogos e módulos independentes que se comunicam com a mesma base de dados.
+O sistema possui uma **área pública**, composta de um **dashboard** e uma **interface administrativa**; e uma **API** que permite verificar o saldo e registrar operações de crédito e débito no saldo do usuário, permitindo assim que diferentes equipes desenvolvam jogos e módulos independentes que se comunicam com a mesma base de dados.
 
 ---
 
@@ -12,7 +12,6 @@ O projeto possui uma **área pública**, composta de um **dashboard** e uma **in
 
 TigrIFBA/
 ├── data/
-│ ├── db.sqlite     # Banco de dados fornecido como exemplo
 │ └── init_db.php   # Script para inicializar o banco de dados
 |
 ├── public/         # Área pública da aplicação (interface do usuário e painel administrativo)
